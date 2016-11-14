@@ -1,0 +1,32 @@
+version: '2'
+# the following environment variables are expected to be available when running 
+# docker-compose up
+# - mipmap_source: The folder containing the data to convert and the associated configuration
+# - mipmap_target: Where to store the result of the conversion
+# - mipmap_db: Where to store the PostgreSQL DB files for MIPMap
+
+# WARNING: For some reason, during the first start the postgres DB is not always ready fast
+#          enough, just make sure to restart everything if it fails the first time.
+
+services:
+
+  MIP-Postgres:
+    image: "postgres"
+    container_name: "mip-postgres"
+    restart: unless-stopped
+    volumes:
+        - "${mipmap_db}:/var/lib/postgresql/data:rw"
+    environment:
+        - POSTGRES_USER=mipmap
+        - POSTGRES_PASSWORD=mipmap
+
+  MIPMap:
+    image: "sambuc/hbp-mipmap"
+    container_name: "mipmap"
+    volumes:
+     - "${mipmap_source}:/opt/source:ro"
+     - "${mipmap_target}:/opt/target:rw"
+    links:
+     - "MIP-Postgres:db"
+
+    # docker run --name some-app --link some-postgres:postgres -d application-that-uses-postgres
