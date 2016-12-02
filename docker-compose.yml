@@ -39,7 +39,7 @@ services:
         - POSTGRES_PASSWORD=mipmap
 
   MIPMap:
-    image: "sambuc/hbp-mipmap"
+    image: "hbpmip/mipmap"
     container_name: "mipmap"
     volumes:
      - "${mipmap_source}:/opt/source:ro"
