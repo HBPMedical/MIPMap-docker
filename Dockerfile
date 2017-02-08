@@ -19,6 +19,19 @@
 FROM alpine:3.4
 MAINTAINER Lionel Sambuc <lionel.sambuc@epfl.ch>
 
+ARG BUILD_DATE
+#ARG VCS_REF
+LABEL org.label-schema.build-date=$BUILD_DATE \
+    org.label-schema.name="hbpmip/mipmap" \
+    org.label-schema.description="Docker image for running MIPMap" \
+    org.label-schema.url="https://github.com/HBPSP8Repo/MIPMap-docker" \
+    org.label-schema.vcs-type="git" \
+    #org.label-schema.vcs-ref=$VCS_REF \
+    org.label-schema.vcs-url="https://github.com/HBPSP8Repo/MIPMap" \
+    org.label-schema.vendor="WIM AUEB" \
+    org.label-schema.docker.dockerfile="Dockerfile" \
+    org.label-schema.schema-version="1.0"
+
 # Here we install GNU libc (aka glibc) and set C.UTF-8 locale as default.
 RUN ALPINE_GLIBC_BASE_URL="https://github.com/sgerrand/alpine-pkg-glibc/releases/download" && \
     ALPINE_GLIBC_PACKAGE_VERSION="2.23-r2" && \

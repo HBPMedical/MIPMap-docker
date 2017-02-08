@@ -1,5 +1,12 @@
 # Docker container for MIPMap
 
+Use the following command to build the MIPMap image:
+
+   ```sh
+    $ docker build -t hbpmip/mipmap \
+    --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` .
+    ```
+    
 To use this image, you need a PostgreSQL database running.
 
 A file named `postgresdb.properties` should be located at the root of the input data and contain the following:
