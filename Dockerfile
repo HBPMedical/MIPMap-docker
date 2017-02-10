@@ -101,4 +101,4 @@ ADD MIPMapReduced.jar /opt/
 
 WORKDIR /opt/
 
-CMD ["java", "-jar", "/opt/MIPMapReduced.jar", "/opt/source/map.xml", "/opt/target", "/opt/source/postgresdb.properties"]
+CMD ["java", "-jar", "/opt/MIPMapReduced.jar", "/opt/map.xml", "/opt/target", "/opt/postgresdb.properties"]

@@ -2,14 +2,14 @@
 
 Use the following command to build the MIPMap image:
 
-   ```sh
-    $ docker build -t hbpmip/mipmap \
+```sh
+  $ docker build -t hbpmip/mipmap \
     --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` .
-    ```
-    
+```
+
 To use this image, you need a PostgreSQL database running.
 
-A file named `postgresdb.properties` should be located at the root of the input data and contain the following:
+A file named `postgresdb.properties` should be located at /opt/postgresdb.properties and contain the following:
 ```ini
   driver = org.postgresql.Driver
   uri = jdbc:postgresql://db:5432/
@@ -18,12 +18,24 @@ A file named `postgresdb.properties` should be located at the root of the input 
   mappingTask-DatabaseName = mipmap
 ```
 
-username, password and mappingTask-DatabaseName need to be updated to match the PostgreSQL parameters.
-The database is to be linked by default as ```db```. This can be changed in the URI above.
+Parameters 'username', 'password' and 'mappingTask-DatabaseName' need to be updated to match the PostgreSQL parameters.
+The database is to be linked by default as 'db'. This can be changed in the 'uri' parameter above.
 
-This container expects two folders to be mapped:
+MIPMap also expects a `map.xml` file at `/opt/source/map.xml`. The `map.xml` file refers to source files and target files with their relative path. These files should be located in the `source` and `target` folders, which are mounted in the container with relevant access rights. The output is generated in the `target/Target-translatedInstances0` subfolder.
+
+Eventually, this container expects two folders and two files to be mapped:
 
 ```yml
   - "${mipmap_source}:/opt/source:ro"
+  - "${mipmap_map}:/opt/source/map.xml:ro"
+  - "${mipmap_pgproperties}:/opt/postgresdb.properties:ro"
   - "${mipmap_target}:/opt/target:rw"
+```
+
+The container contains demo files and can be tested with the following command:
+
+```sh
+$ mipmap_source=$(pwd)/source mipmap_map=$(pwd)/map.xml \
+  mipmap_pgproperties=$(pwd)/postgresdb.properties \
+  mipmap_target=$(pwd)/target mipmap_db=$(pwd)/data docker-compose up
 ```

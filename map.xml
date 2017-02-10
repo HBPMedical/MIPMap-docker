@@ -15,19 +15,19 @@
       <csv-db-name>Source</csv-db-name>
       <csv-tables>
         <csv-table>
-          <schema>/hospitalPatient.csv</schema>
+          <schema>source/hospitalPatient.csv</schema>
           <instances>
             <instance>
-              <path>/hospitalPatient.csv</path>
+              <path>source/hospitalPatient.csv</path>
               <column-names>true</column-names>
             </instance>
           </instances>
         </csv-table>
         <csv-table>
-          <schema>/hospitalExam.csv</schema>
+          <schema>source/hospitalExam.csv</schema>
           <instances>
             <instance>
-              <path>/hospitalExam.csv</path>
+              <path>source/hospitalExam.csv</path>
               <column-names>true</column-names>
             </instance>
           </instances>
@@ -57,7 +57,7 @@
       <csv-db-name>Target</csv-db-name>
       <csv-tables>
         <csv-table>
-          <schema>/patient_exams.csv</schema>
+          <schema>target/patient_exams.csv</schema>
           <instances />
         </csv-table>
       </csv-tables>
