@@ -3,8 +3,7 @@
 Use the following command to build the MIPMap image:
 
 ```sh
-  $ docker build -t hbpmip/mipmap \
-    --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` .
+  $ ./build.sh
 ```
 
 To use this image, you need a PostgreSQL database running.
@@ -27,7 +26,7 @@ Eventually, this container expects two folders and two files to be mapped:
 
 ```yml
   - "${mipmap_source}:/opt/source:ro"
-  - "${mipmap_map}:/opt/source/map.xml:ro"
+  - "${mipmap_map}:/opt/map.xml:ro"
   - "${mipmap_pgproperties}:/opt/postgresdb.properties:ro"
   - "${mipmap_target}:/opt/target:rw"
 ```
