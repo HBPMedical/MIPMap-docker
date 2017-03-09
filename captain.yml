@@ -1,0 +1,9 @@
+mipmap:
+  build: Dockerfile
+  image: hbpmip/mipmap
+  pre:
+    - echo "Building hbpmip/mipmap image"
+  post:
+    - echo "Finished building hbpmip/mipmap image"
+  test:
+    - ./tests/test.sh
