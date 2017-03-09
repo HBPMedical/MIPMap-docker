@@ -27,7 +27,7 @@ else
 fi
 
 #  WARNING: Requires captain 1.1.0 to push user tags
-$CAPTAIN push --branch-tags=false --commit-tags=true data-catalog-setup --tag $(git describe)
+$CAPTAIN push --branch-tags=false --commit-tags=true mipmap --tag $(git describe)
 sed "s/USER/${USER^}/" $WORKSPACE/slack.json > $WORKSPACE/.slack.json
 sed -i.bak "s/VERSION/$(git describe)/" $WORKSPACE/.slack.json
 curl -k -X POST --data-urlencode payload@$WORKSPACE/.slack.json https://hbps1.chuv.ch/slack/dev-activity
