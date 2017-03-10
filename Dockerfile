@@ -32,6 +32,16 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
     org.label-schema.docker.dockerfile="Dockerfile" \
     org.label-schema.schema-version="1.0"
 
+# Install Dockerize
+ENV DOCKERIZE_VERSION=v0.3.0
+
+RUN apk add --update ca-certificates wget \
+    && rm -rf /var/cache/apk/* /tmp/* \
+    && update-ca-certificates \
+    && wget -O /tmp/dockerize.tar.gz https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-${DOCKERIZE_VERSION}.tar.gz \
+    && tar -C /usr/local/bin -xzvf /tmp/dockerize.tar.gz \
+    && rm -rf /tmp/dockerize.tar.gz
+
 # Installs MIPMap
 COPY MIPMapReduced.jar /opt/
 
