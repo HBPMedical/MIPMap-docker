@@ -40,3 +40,7 @@ $ mipmap_source=$(pwd)/source mipmap_map=$(pwd)/map.xml \
 ```
 
 It might be necessary to launch the container twice for the test to complete: a database has to be initialised the first time around, and this step is usually not finished fast enough for MIPMap to be able to connect.
+
+## Push on Docker Hub
+
+Run: `./docker_push.sh`
