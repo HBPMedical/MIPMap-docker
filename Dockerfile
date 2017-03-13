@@ -20,6 +20,11 @@ FROM openjdk:8u121-jre-alpine
 MAINTAINER Lionel Sambuc <lionel.sambuc@epfl.ch>
 
 ARG BUILD_DATE
+ARG EXPORT_CMD="-csv"
+ENV EXPORT_CMD=$EXPORT_CMD
+ARG EXPORT_PATH="/opt/target"
+ENV EXPORT_PATH=$EXPORT_PATH
+# ARG PATH
 #ARG VCS_REF
 LABEL org.label-schema.build-date=$BUILD_DATE \
     org.label-schema.name="hbpmip/mipmap" \
@@ -47,4 +52,4 @@ COPY MIPMapReduced.jar /opt/
 
 WORKDIR /opt
 
-CMD ["java", "-jar", "/opt/MIPMapReduced.jar", "/opt/map.xml", "/opt/target", "/opt/postgresdb.properties"]
+CMD java -jar /opt/MIPMapReduced.jar /opt/map.xml /opt/postgresdb.properties $EXPORT_CMD $EXPORT_PATH

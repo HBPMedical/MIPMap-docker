@@ -109,15 +109,6 @@
       <transformation-function>Source.hospitalPatient.hospitalPatientTuple.patient_ipp</transformation-function>
       <confidence>1.0</confidence>
     </correspondence>
-    <correspondence>
-      <source-paths>
-        <source-path>Source.hospitalPatient.hospitalPatientTuple.first_name</source-path>
-        <source-path>Source.hospitalPatient.hospitalPatientTuple.last_name</source-path>
-      </source-paths>
-      <target-path>Target.patient_exams.patient_examsTuple.pname</target-path>
-      <transformation-function>append(append(Source.hospitalPatient.hospitalPatientTuple.first_name, " "), Source.hospitalPatient.hospitalPatientTuple.last_name)</transformation-function>
-      <confidence>1.0</confidence>
-    </correspondence>
   </correspondences>
 </mappingtask>
 
