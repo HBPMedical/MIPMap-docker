@@ -80,11 +80,12 @@ git describe --exact-match > /dev/null 2>&1 || (
 
 git push
 git push --tags
+updated_version=$(bumpversion --dry-run --list patch | grep current_version | sed -r s,"^.*=",,)
 
 #  WARNING: Requires captain 1.1.0 to push user tags
-$CAPTAIN push --branch-tags=false --commit-tags=true mipmap --tag $(git describe)
+$CAPTAIN push --branch-tags=false --commit-tags=false mipmap --tag $updated_version
 sed "s/USER/${USER^}/" $WORKSPACE/slack.json > $WORKSPACE/.slack.json
-sed -i.bak "s/VERSION/$(git describe)/" $WORKSPACE/.slack.json
+sed -i.bak "s/VERSION/$updated_version/" $WORKSPACE/.slack.json
 curl -k -X POST --data-urlencode payload@$WORKSPACE/.slack.json https://hbps1.chuv.ch/slack/dev-activity
 rm -f $WORKSPACE/.slack.json
 rm -f $WORKSPACE/.slack.json.bak
