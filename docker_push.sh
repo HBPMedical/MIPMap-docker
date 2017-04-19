@@ -33,11 +33,49 @@ if test $count -gt 0; then
   exit 1
 fi
 
+select_part() {
+  local choice=$1
+  case "$choice" in
+      "Patch release")
+          bumpversion patch
+          ;;
+      "Minor release")
+          bumpversion minor
+          ;;
+      "Major release")
+          bumpversion major
+          ;;
+      *)
+          read -p "Version > " version
+          bumpversion --new_version=$version $part
+          ;;
+  esac
+}
+
+git pull --tags
 # Look for a version tag in Git. If not found, ask the user to provide one
-git describe --exact-match > /dev/null || (
-  echo "The latest commit has not been tagged with a version. Please enter the version for this release."
-  read -p "Version > " version
-  git tag -a -m "Docker release $version" $version
+git describe --exact-match > /dev/null 2>&1 || (
+  latest_version=$(git describe --abbrev=00 || \
+    (bumpversion --dry-run --list patch | grep current_version | sed -r s,"^.*=",,) || echo '0.0.1')
+  echo
+  echo "Current commit has not been tagged with a version. Latest known version is $latest_version."
+  echo
+  echo 'What do you want to release?'
+  PS3='Select the version increment> '
+  options=("Patch release" "Minor release" "Major release" "Release with a custom version")
+  select choice in "${options[@]}";
+  do
+    select_part "$choice"
+    break
+  done
+  updated_version=$(bumpversion --dry-run --list patch | grep current_version | sed -r s,"^.*=",,)
+  read -p "Release version $updated_version? [y/N] > " ok
+  if [ "$ok" != "y" ]; then
+    echo "Release aborted"
+    exit 1
+  fi
+  # Bumpversion v0.5.3 does not support annotated tags
+  git tag -a -m "Docker release $updated_version" $updated_version
 )
 
 git push
