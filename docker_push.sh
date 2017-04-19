@@ -54,7 +54,7 @@ select_part() {
 
 git pull --tags
 # Look for a version tag in Git. If not found, ask the user to provide one
-git describe --exact-match > /dev/null 2>&1 || (
+[ $(git tag --points-at HEAD | wc -l) == 1 ] || (
   latest_version=$(git describe --abbrev=00 || \
     (bumpversion --dry-run --list patch | grep current_version | sed -r s,"^.*=",,) || echo '0.0.1')
   echo
@@ -74,8 +74,6 @@ git describe --exact-match > /dev/null 2>&1 || (
     echo "Release aborted"
     exit 1
   fi
-  # Bumpversion v0.5.3 does not support annotated tags
-  git tag -a -m "Docker release $updated_version" $updated_version
 )
 
 git push
