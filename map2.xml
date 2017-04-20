@@ -55,7 +55,7 @@
     <type>Relational</type>
     <relational>
       <driver>org.postgresql.Driver</driver>
-      <uri>jdbc:postgresql://localhost/i2b2_datamart_original</uri>
+      <uri>jdbc:postgresql://172.16.10.130/i2b2_datamart</uri>
       <login>postgres</login>
       <password>0000</password>
     </relational>
@@ -71,14 +71,14 @@
       <source-paths>
         <source-path>Source.hospitalExam.hospitalExamTuple.patient_ipp</source-path>
       </source-paths>
-      <target-path>i2b2_datamart_original.observation_fact.observation_factTuple.patient_num</target-path>
+      <target-path>i2b2_datamart.observation_fact.observation_factTuple.patient_num</target-path>
       <transformation-function>Source.hospitalExam.hospitalExamTuple.patient_ipp</transformation-function>
       <confidence>1.0</confidence>
     </correspondence>
     <correspondence>
       <source-paths />
       <source-value>newId()</source-value>
-      <target-path>i2b2_datamart_original.observation_fact.observation_factTuple.encounter_num</target-path>
+      <target-path>i2b2_datamart.observation_fact.observation_factTuple.encounter_num</target-path>
       <transformation-function>newId()</transformation-function>
       <confidence>1.0</confidence>
     </correspondence>
@@ -86,35 +86,35 @@
       <source-paths>
         <source-path>Source.hospitalExam.hospitalExamTuple.measurement_id</source-path>
       </source-paths>
-      <target-path>i2b2_datamart_original.observation_fact.observation_factTuple.concept_cd</target-path>
+      <target-path>i2b2_datamart.observation_fact.observation_factTuple.concept_cd</target-path>
       <transformation-function>Source.hospitalExam.hospitalExamTuple.measurement_id</transformation-function>
       <confidence>1.0</confidence>
     </correspondence>
     <correspondence>
       <source-paths />
       <source-value>"Test"</source-value>
-      <target-path>i2b2_datamart_original.observation_fact.observation_factTuple.provider_id</target-path>
+      <target-path>i2b2_datamart.observation_fact.observation_factTuple.provider_id</target-path>
       <transformation-function>"Test"</transformation-function>
       <confidence>1.0</confidence>
     </correspondence>
     <correspondence>
       <source-paths />
       <source-value>"@"</source-value>
-      <target-path>i2b2_datamart_original.observation_fact.observation_factTuple.modifier_cd</target-path>
+      <target-path>i2b2_datamart.observation_fact.observation_factTuple.modifier_cd</target-path>
       <transformation-function>"@"</transformation-function>
       <confidence>1.0</confidence>
     </correspondence>
     <correspondence>
       <source-paths />
       <source-value>"N"</source-value>
-      <target-path>i2b2_datamart_original.observation_fact.observation_factTuple.valtype_cd</target-path>
+      <target-path>i2b2_datamart.observation_fact.observation_factTuple.valtype_cd</target-path>
       <transformation-function>"N"</transformation-function>
       <confidence>1.0</confidence>
     </correspondence>
     <correspondence>
       <source-paths />
       <source-value>"E"</source-value>
-      <target-path>i2b2_datamart_original.observation_fact.observation_factTuple.tval_char</target-path>
+      <target-path>i2b2_datamart.observation_fact.observation_factTuple.tval_char</target-path>
       <transformation-function>"E"</transformation-function>
       <confidence>1.0</confidence>
     </correspondence>
@@ -122,38 +122,39 @@
       <source-paths>
         <source-path>Source.hospitalExam.hospitalExamTuple.measurement_value</source-path>
       </source-paths>
-      <target-path>i2b2_datamart_original.observation_fact.observation_factTuple.nval_num</target-path>
+      <target-path>i2b2_datamart.observation_fact.observation_factTuple.nval_num</target-path>
       <transformation-function>Source.hospitalExam.hospitalExamTuple.measurement_value</transformation-function>
       <confidence>1.0</confidence>
     </correspondence>
     <correspondence>
       <source-paths />
       <source-value>datetime()</source-value>
-      <target-path>i2b2_datamart_original.observation_fact.observation_factTuple.import_date</target-path>
+      <target-path>i2b2_datamart.observation_fact.observation_factTuple.import_date</target-path>
       <transformation-function>datetime()</transformation-function>
-      <confidence>1.0</confidence>
-    </correspondence>
-    <correspondence>
-      <source-paths>
-        <source-path>Source.hospitalExam.hospitalExamTuple.date</source-path>
-      </source-paths>
-      <target-path>i2b2_datamart_original.observation_fact.observation_factTuple.start_date</target-path>
-      <transformation-function>Source.hospitalExam.hospitalExamTuple.date</transformation-function>
       <confidence>1.0</confidence>
     </correspondence>
     <correspondence>
       <source-paths />
       <source-value>"1"</source-value>
-      <target-path>i2b2_datamart_original.observation_fact.observation_factTuple.instance_num</target-path>
+      <target-path>i2b2_datamart.observation_fact.observation_factTuple.instance_num</target-path>
       <transformation-function>"1"</transformation-function>
       <confidence>1.0</confidence>
     </correspondence>
     <correspondence>
       <source-paths />
       <source-value>newId()</source-value>
-      <target-path>i2b2_datamart_original.observation_fact.observation_factTuple.text_search_index</target-path>
+      <target-path>i2b2_datamart.observation_fact.observation_factTuple.text_search_index</target-path>
       <transformation-function>newId()</transformation-function>
+      <confidence>1.0</confidence>
+    </correspondence>
+    <correspondence>
+      <source-paths>
+        <source-path>Source.hospitalExam.hospitalExamTuple.date</source-path>
+      </source-paths>
+      <target-path>i2b2_datamart.observation_fact.observation_factTuple.start_date</target-path>
+      <transformation-function>todate(Source.hospitalExam.hospitalExamTuple.date, "YYYY/MM/DD")</transformation-function>
       <confidence>1.0</confidence>
     </correspondence>
   </correspondences>
 </mappingtask>
+

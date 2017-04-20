@@ -45,6 +45,7 @@ services:
      - "${mipmap_source}:/opt/source:ro"
      - "${mipmap_map}:/opt/map.xml:ro"
      - "${mipmap_pgproperties}:/opt/postgresdb.properties:ro"
+     - "${mipmap_exportdbproperties}:/opt/exportdb.properties:ro"
      - "${mipmap_target}:/opt/target:rw"
     links:
      - "MIP-Postgres:db"
