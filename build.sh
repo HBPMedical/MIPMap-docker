@@ -1,9 +1,13 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -e
 
 if groups $USER | grep &>/dev/null '\bdocker\b'; then
-  DOCKER="docker"
+  CAPTAIN="captain"
 else
-  DOCKER="sudo docker"
+  CAPTAIN="sudo captain"
 fi
 
-$DOCKER build -t hbpmip/mipmap --build-arg BUILD_DATE=$(date --iso-8601=seconds) .
+BUILD_DATE=$(date --iso-8601=seconds) \
+  VCS_REF=$(git describe --tags --dirty) \
+  VERSION=$(git describe --tags --dirty) \
+  $CAPTAIN build

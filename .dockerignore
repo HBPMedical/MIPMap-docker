@@ -1,0 +1,7 @@
+.vagrant
+.git
+Makefile
+README.md
+Vagrantfile
+build.sh
+captain.sh

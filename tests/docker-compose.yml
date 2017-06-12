@@ -1,0 +1,34 @@
+version: '2'
+
+services:
+
+  test_db:
+    image: "postgres:9.6.2-alpine"
+    container_name: "test-db"
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=test
+      - POSTGRES_PASSWORD=test
+
+  wait_dbs:
+    image: "waisbrot/wait"
+    links:
+      - "test_db:test_db"
+    environment:
+      - TARGETS=test_db:5432
+
+  # Use the latest image built as this is what is under test
+  mipmap_to_files:
+    image: "hbpmip/mipmap"
+    container_name: "mipmap"
+    command: "-csv /opt/target"
+    volumes:
+      - "../source:/opt/source:ro"
+      - "../tests/map.xml:/opt/map.xml:ro"
+      - "./target:/opt/target:rw"
+    environment:
+      - MIPMAP_DB_NAME=test
+      - MIPMAP_DB_USER=test
+      - MIPMAP_DB_PASSWORD=test
+    links:
+      - "test_db:db"

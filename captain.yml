@@ -5,5 +5,5 @@ mipmap:
     - echo "Building hbpmip/mipmap image"
   post:
     - echo "Finished building hbpmip/mipmap image"
-#  test:
-#    - ./tests/test.sh
+  test:
+    - ./tests/test.sh
