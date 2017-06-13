@@ -56,8 +56,8 @@
     <relational>
       <driver>org.postgresql.Driver</driver>
       <uri>jdbc:postgresql://db/i2b2_datamart</uri>
-      <login>postgres</login>
-      <password>0000</password>
+      <login>i2b2</login>
+      <password>i2b2</password>
     </relational>
     <inclusions />
     <exclusions />

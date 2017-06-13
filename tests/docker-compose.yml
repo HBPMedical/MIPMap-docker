@@ -7,7 +7,6 @@ services:
     container_name: "test-db"
     restart: unless-stopped
     environment:
-      - POSTGRES_USER=test
       - POSTGRES_PASSWORD=test
 
   wait_dbs:
@@ -16,6 +15,31 @@ services:
       - "test_db:test_db"
     environment:
       - TARGETS=test_db:5432
+
+  create_dbs:
+    image: "hbpmip/create-databases:1.0.0"
+    container_name: "create-dbs"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_ADMIN_USER=postgres
+      - DB_ADMIN_PASSWORD=test
+      - DB1=mipmap
+      - USER1=mipmap
+      - PASSWORD1=mipmap
+      - DB2=i2b2_datamart
+      - USER2=i2b2
+      - PASSWORD2=i2b2
+    links:
+      - "test_db:db"
+
+  i2b2_datamart_setup:
+    image: "hbpmip/i2b2-setup:1.4.7"
+    command: "upgrade head"
+    environment:
+      - DB_URL=postgresql://i2b2:i2b2@db:5432/i2b2_datamart
+    links:
+      - "test_db:db"
 
   # Use the latest image built as this is what is under test
   mipmap_to_files:
@@ -27,8 +51,23 @@ services:
       - "../tests/map.xml:/opt/map.xml:ro"
       - "./target:/opt/target:rw"
     environment:
-      - MIPMAP_DB_NAME=test
-      - MIPMAP_DB_USER=test
-      - MIPMAP_DB_PASSWORD=test
+      - MIPMAP_DB_NAME=mipmap
+      - MIPMAP_DB_USER=mipmap
+      - MIPMAP_DB_PASSWORD=mipmap
+    links:
+      - "test_db:db"
+
+  mipmap_to_i2b2_datamart:
+    image: "hbpmip/mipmap"
+    container_name: "mipmap"
+    command: "-csv /opt/target"
+    volumes:
+      - "../source:/opt/source:ro"
+      - "../tests/map2.xml:/opt/map.xml:ro"
+      - "./target:/opt/target:rw"
+    environment:
+      - MIPMAP_DB_NAME=mipmap
+      - MIPMAP_DB_USER=mipmap
+      - MIPMAP_DB_PASSWORD=mipmap
     links:
       - "test_db:db"

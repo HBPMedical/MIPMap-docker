@@ -24,6 +24,7 @@ fi
 
 $DOCKER_COMPOSE up -d test_db
 $DOCKER_COMPOSE run wait_dbs
+$DOCKER_COMPOSE run create_dbs
 
 echo
 echo "Test mapping a CSV file to another CSV file"
@@ -33,6 +34,10 @@ $DOCKER_COMPOSE run mipmap_to_files
 
 echo "Check the results of mapping a CSV file to another CSV file"
 diff -q ../target/patient_exams.csv target/patient_exams.csv
+
+$DOCKER_COMPOSE run i2b2_datamart_setup
+$DOCKER_COMPOSE run mipmap_to_i2b2_datamart
+# TODO: test results
 
 # Cleanup
 echo
