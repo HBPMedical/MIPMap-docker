@@ -47,11 +47,6 @@ RUN apk add --update ca-certificates wget \
     && tar -C /usr/local/bin -xzvf /tmp/dockerize.tar.gz \
     && rm -rf /tmp/dockerize.tar.gz
 
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8
-RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main" > /etc/apt/sources.list.d/pgdg.list
-RUN apt-get update && apt-get -y -q install python-software-properties software-properties-common \
-    && apt-get -y -q install postgresql-9.3 postgresql-client-9.3 postgresql-contrib-9.3
-
 # Installs MIPMap
 COPY MIPMapReduced.jar /opt/
 
