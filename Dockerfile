@@ -50,9 +50,9 @@ CMD ["$EXPORT_CMD", "$EXPORT_PATH"]
 LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.name="hbpmip/mipmap" \
       org.label-schema.description="Docker image for running MIPMap" \
-      org.label-schema.url="https://github.com/HBPSP8Repo/MIPMap-docker" \
+      org.label-schema.url="https://github.com/HBPMedical/MIPMap-docker" \
       org.label-schema.vcs-type="git" \
-      org.label-schema.vcs-url="https://github.com/HBPSP8Repo/MIPMap" \
+      org.label-schema.vcs-url="https://github.com/HBPMedical/MIPMap" \
       org.label-schema.vcs-ref=$VCS_REF \
       org.label-schema.version="$VERSION" \
       org.label-schema.vendor="WIM AUEB" \
