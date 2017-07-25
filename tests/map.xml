@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappingtask>
+  <config>
+    <rewriteSubsumptions>true</rewriteSubsumptions>
+    <rewriteCoverages>true</rewriteCoverages>
+    <rewriteSelfJoins>true</rewriteSelfJoins>
+    <rewriteEGDs>false</rewriteEGDs>
+    <sortStrategy>-1</sortStrategy>
+    <skolemTableStrategy>-1</skolemTableStrategy>
+    <useLocalSkolem>false</useLocalSkolem>
+  </config>
+  <source>
+    <type>CSV</type>
+    <csv>
+      <csv-db-name>Source</csv-db-name>
+      <csv-tables>
+        <csv-table>
+          <schema>source/hospitalPatient.csv</schema>
+          <instances>
+            <instance>
+              <path>source/hospitalPatient.csv</path>
+              <column-names>true</column-names>
+            </instance>
+          </instances>
+        </csv-table>
+        <csv-table>
+          <schema>source/hospitalExam.csv</schema>
+          <instances>
+            <instance>
+              <path>source/hospitalExam.csv</path>
+              <column-names>true</column-names>
+            </instance>
+          </instances>
+        </csv-table>
+      </csv-tables>
+    </csv>
+    <inclusions />
+    <exclusions />
+    <duplications />
+    <functionalDependencies />
+    <selectionConditions />
+    <joinConditions>
+      <joinCondition>
+        <join>
+          <from>Source.hospitalPatient.hospitalPatientTuple.patient_ipp</from>
+          <to>Source.hospitalExam.hospitalExamTuple.patient_ipp</to>
+        </join>
+        <foreignKey>false</foreignKey>
+        <mandatory>true</mandatory>
+        <matchString>false</matchString>
+      </joinCondition>
+    </joinConditions>
+  </source>
+  <target>
+    <type>CSV</type>
+    <csv>
+      <csv-db-name>Target</csv-db-name>
+      <csv-tables>
+        <csv-table>
+          <schema>target/patient_exams.csv</schema>
+          <instances />
+        </csv-table>
+      </csv-tables>
+    </csv>
+    <inclusions />
+    <exclusions />
+    <duplications />
+    <functionalDependencies />
+    <selectionConditions />
+    <joinConditions />
+  </target>
+  <correspondences>
+    <correspondence>
+      <source-paths>
+        <source-path>Source.hospitalExam.hospitalExamTuple.date</source-path>
+      </source-paths>
+      <target-path>Target.patient_exams.patient_examsTuple.examdate</target-path>
+      <transformation-function>Source.hospitalExam.hospitalExamTuple.date</transformation-function>
+      <confidence>1.0</confidence>
+    </correspondence>
+    <correspondence>
+      <source-paths>
+        <source-path>Source.hospitalExam.hospitalExamTuple.measurement_id</source-path>
+      </source-paths>
+      <target-path>Target.patient_exams.patient_examsTuple.Measurement</target-path>
+      <transformation-function>Source.hospitalExam.hospitalExamTuple.measurement_id</transformation-function>
+      <confidence>1.0</confidence>
+    </correspondence>
+    <correspondence>
+      <source-paths>
+        <source-path>Source.hospitalExam.hospitalExamTuple.measurement_value</source-path>
+      </source-paths>
+      <target-path>Target.patient_exams.patient_examsTuple.Value</target-path>
+      <transformation-function>Source.hospitalExam.hospitalExamTuple.measurement_value</transformation-function>
+      <confidence>1.0</confidence>
+    </correspondence>
+    <correspondence>
+      <source-paths />
+      <source-value>"BL"</source-value>
+      <target-path>Target.patient_exams.patient_examsTuple.viscode</target-path>
+      <transformation-function>"BL"</transformation-function>
+      <confidence>1.0</confidence>
+    </correspondence>
+    <correspondence>
+      <source-paths>
+        <source-path>Source.hospitalPatient.hospitalPatientTuple.patient_ipp</source-path>
+      </source-paths>
+      <target-path>Target.patient_exams.patient_examsTuple.pid</target-path>
+      <transformation-function>Source.hospitalPatient.hospitalPatientTuple.patient_ipp</transformation-function>
+      <confidence>1.0</confidence>
+    </correspondence>
+  </correspondences>
+</mappingtask>
+

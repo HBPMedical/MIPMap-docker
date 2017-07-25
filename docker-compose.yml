@@ -17,7 +17,7 @@
 # USE OF THIS SOFTWARE.
 
 version: '2'
-# the following environment variables are expected to be available when running 
+# the following environment variables are expected to be available when running
 # docker-compose up
 # - mipmap_source: The folder containing the data to convert and the associated configuration
 # - mipmap_target: Where to store the result of the conversion
@@ -28,9 +28,9 @@ version: '2'
 
 services:
 
-  MIP-Postgres:
+  database:
     image: "postgres"
-    container_name: "mip-postgres"
+    container_name: "mipmap-postgres"
     restart: unless-stopped
     volumes:
         - "${mipmap_db}:/var/lib/postgresql/data:rw"
@@ -48,4 +48,4 @@ services:
      - "${mipmap_exportdbproperties}:/opt/exportdb.properties:ro"
      - "${mipmap_target}:/opt/target:rw"
     links:
-     - "MIP-Postgres:db"
+     - "database:db"
