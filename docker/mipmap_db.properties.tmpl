@@ -1,0 +1,5 @@
+driver = {{ default .Env.MIPMAP_DB_DRIVER "org.postgresql.Driver" }}
+uri = {{ default .Env.MIPMAP_DB_URL "jdbc:postgresql://db:5432/" }}
+username = {{ default .Env.MIPMAP_DB_USER "postgres" }}
+password = {{ default .Env.MIPMAP_DB_PASSWORD "postgres" }}
+mappingTask-DatabaseName = {{ .Env.MIPMAP_DB_NAME }}

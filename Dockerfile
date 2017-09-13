@@ -16,41 +16,45 @@
 # DISCLAIM ANY LIABILITY OF ANY KIND FOR ANY DAMAGES WHATSOEVER RESULTING FROM THE
 # USE OF THIS SOFTWARE.
 
-
-FROM openjdk:8u121-jre-alpine
+FROM openjdk:8u131-jre-alpine
 MAINTAINER Lionel Sambuc <lionel.sambuc@epfl.ch>
 
 ARG BUILD_DATE
+ARG VCS_REF
+ARG VERSION
 ARG EXPORT_CMD="-csv"
 ENV EXPORT_CMD=$EXPORT_CMD
 ARG EXPORT_PATH="/opt/target"
 ENV EXPORT_PATH=$EXPORT_PATH
-# ARG PATH
-#ARG VCS_REF
-LABEL org.label-schema.build-date=$BUILD_DATE \
-    org.label-schema.name="hbpmip/mipmap" \
-    org.label-schema.description="Docker image for running MIPMap" \
-    org.label-schema.url="https://github.com/HBPSP8Repo/MIPMap-docker" \
-    org.label-schema.vcs-type="git" \
-    #org.label-schema.vcs-ref=$VCS_REF \
-    org.label-schema.vcs-url="https://github.com/HBPSP8Repo/MIPMap" \
-    org.label-schema.vendor="WIM AUEB" \
-    org.label-schema.docker.dockerfile="Dockerfile" \
-    org.label-schema.schema-version="1.0"
 
 # Install Dockerize
-ENV DOCKERIZE_VERSION=v0.3.0
+ENV DOCKERIZE_VERSION=v0.4.0
 
-RUN apk add --update ca-certificates wget \
-    && rm -rf /var/cache/apk/* /tmp/* \
-    && update-ca-certificates \
-    && wget -O /tmp/dockerize.tar.gz https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-${DOCKERIZE_VERSION}.tar.gz \
+RUN apk update && apk add bash wget \
+    && wget -O /tmp/dockerize.tar.gz https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-alpine-linux-amd64-${DOCKERIZE_VERSION}.tar.gz \
     && tar -C /usr/local/bin -xzvf /tmp/dockerize.tar.gz \
-    && rm -rf /tmp/dockerize.tar.gz
+    && apk del wget \
+    && rm -rf /var/cache/apk/* /tmp/*
 
 # Installs MIPMap
 COPY MIPMapReduced.jar /opt/
+COPY docker/mipmap_db.properties.tmpl /etc/mipmap/
+COPY docker/run.sh /opt/run-mipmap.sh
 
 WORKDIR /opt
 
-CMD java -jar /opt/MIPMapReduced.jar /opt/map.xml /opt/postgresdb.properties $EXPORT_CMD $EXPORT_PATH
+ENTRYPOINT ["/opt/run-mipmap.sh"]
+
+CMD ["$EXPORT_CMD", "$EXPORT_PATH"]
+
+LABEL org.label-schema.build-date=$BUILD_DATE \
+      org.label-schema.name="hbpmip/mipmap" \
+      org.label-schema.description="Docker image for running MIPMap" \
+      org.label-schema.url="https://github.com/HBPMedical/MIPMap-docker" \
+      org.label-schema.vcs-type="git" \
+      org.label-schema.vcs-url="https://github.com/HBPMedical/MIPMap" \
+      org.label-schema.vcs-ref=$VCS_REF \
+      org.label-schema.version="$VERSION" \
+      org.label-schema.vendor="WIM AUEB" \
+      org.label-schema.docker.dockerfile="Dockerfile" \
+      org.label-schema.schema-version="1.0"
