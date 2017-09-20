@@ -29,14 +29,14 @@ $DOCKER_COMPOSE run create_dbs
 echo
 echo "Test mapping a CSV file to another CSV file"
 mkdir -p target
-cp patient_exams_schema.csv target/patient_exams.csv
+#cp patient_exams_schema.csv target/patient_exams.csv
 $DOCKER_COMPOSE run mipmap_to_files
 
 echo "Check the results of mapping a CSV file to another CSV file"
 diff -q ../target/patient_exams.csv target/patient_exams.csv
 
-$DOCKER_COMPOSE run i2b2_datamart_setup
-$DOCKER_COMPOSE run mipmap_to_i2b2_datamart
+#$DOCKER_COMPOSE run i2b2_datamart_setup
+#$DOCKER_COMPOSE run mipmap_to_i2b2_datamart
 # TODO: test results
 
 # Cleanup

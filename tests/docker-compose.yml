@@ -43,7 +43,7 @@ services:
 
   # Use the latest image built as this is what is under test
   mipmap_to_files:
-    image: "hbpmip/mipmap"
+    image: "hbpmip/mipmap:1.7"
     container_name: "mipmap"
     command: "-csv /opt/target"
     volumes:

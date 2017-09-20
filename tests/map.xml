@@ -75,10 +75,10 @@
         <source-path>Source.hospitalExam.hospitalExamTuple.date</source-path>
       </source-paths>
       <target-path>Target.patient_exams.patient_examsTuple.examdate</target-path>
-      <transformation-function>Source.hospitalExam.hospitalExamTuple.date</transformation-function>
+      <transformation-function>totimestamp(Source.hospitalExam.hospitalExamTuple.date, "DD/MM/YYYY hh24:mi:ss")</transformation-function>
       <confidence>1.0</confidence>
     </correspondence>
-    <correspondence>
+<!--    <correspondence>
       <source-paths>
         <source-path>Source.hospitalExam.hospitalExamTuple.measurement_id</source-path>
       </source-paths>
@@ -108,7 +108,7 @@
       <target-path>Target.patient_exams.patient_examsTuple.pid</target-path>
       <transformation-function>Source.hospitalPatient.hospitalPatientTuple.patient_ipp</transformation-function>
       <confidence>1.0</confidence>
-    </correspondence>
+    </correspondence>-->
   </correspondences>
 </mappingtask>
 
