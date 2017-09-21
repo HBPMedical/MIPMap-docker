@@ -28,7 +28,7 @@ ARG EXPORT_PATH="/opt/target"
 ENV EXPORT_PATH=$EXPORT_PATH
 
 # Install Dockerize
-ENV DOCKERIZE_VERSION=v0.4.0
+ENV DOCKERIZE_VERSION=v0.5.0
 
 RUN apk update && apk add bash wget \
     && wget -O /tmp/dockerize.tar.gz https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-alpine-linux-amd64-${DOCKERIZE_VERSION}.tar.gz \
