@@ -3,7 +3,7 @@ version: '2'
 services:
 
   test_db:
-    image: "postgres:9.6.3-alpine"
+    image: "postgres:9.6.5-alpine"
     container_name: "test-db"
     restart: unless-stopped
     environment:
@@ -34,7 +34,7 @@ services:
       - "test_db:db"
 
   i2b2_datamart_setup:
-    image: "hbpmip/i2b2-setup:1.4.9"
+    image: "hbpmip/i2b2-setup:1.5.0"
     command: "upgrade head"
     environment:
       - DB_URL=postgresql://i2b2:i2b2@db:5432/i2b2_datamart
